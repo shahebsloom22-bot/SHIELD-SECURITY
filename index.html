@@ -3,119 +3,284 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHIELD SECURITY</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SHIELD SECURITY | Control Panel</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#080b12;color:#fff;font-family:Arial,sans-serif}
-header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #202638}
-.logo{font-size:23px;font-weight:900;color:#fff}
-.logo span{color:#e63946}
-nav a{color:#aaa;text-decoration:none;margin:0 12px;cursor:pointer}
-nav a:hover{color:#e63946}
-.hero{text-align:center;padding:85px 15px 65px}
-.tag{color:#e63946;letter-spacing:3px;font-size:12px}
-h1{font-size:48px;margin:20px 0}
-h1 span{color:#e63946}
-.hero p{color:#929bad;line-height:2}
-button{background:#e63946;color:white;border:0;padding:13px 25px;border-radius:7px;cursor:pointer;font-weight:bold}
-button:hover{background:#bd2634}
-.container{max-width:1050px;margin:auto;padding:20px}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
-.card{background:#111725;border:1px solid #222d40;padding:25px;border-radius:12px}
-.card small{color:#8994a8}
-.card h2{margin-bottom:5px}
-.section{margin-top:55px}
-.section h2{margin-bottom:20px}
-input,textarea{width:100%;background:#090e18;border:1px solid #283247;padding:14px;color:white;border-radius:7px;margin:8px 0 16px}
-textarea{height:110px;resize:vertical}
-.panel{background:#111725;border:1px solid #222d40;padding:25px;border-radius:12px}
-footer{text-align:center;padding:35px;color:#69758a;border-top:1px solid #202638;margin-top:60px}
-.hidden{display:none}
-@media(max-width:650px){
-h1{font-size:34px}
-.cards{grid-template-columns:1fr}
-nav a{margin:0 5px;font-size:12px}
+:root{--bg:#090b11;--panel:#11151f;--line:#252b38;--red:#e63946;--blue:#3988ff;--muted:#929bad}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:255px;background:#0d111a;border-left:1px solid var(--line);padding:22px 14px;position:fixed;right:0;top:0;bottom:0;overflow-y:auto;z-index:5}
+.brand{padding:12px 10px 25px;font-size:21px;font-weight:900;letter-spacing:1px}
+.brand span{color:var(--red)}
+.brand small{display:block;color:var(--muted);font-size:10px;margin-top:8px;letter-spacing:3px}
+.group{color:#68758b;font-size:11px;padding:17px 12px 8px}
+.nav{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;color:#aeb8c9;text-decoration:none;font-size:13px;margin:3px 0;cursor:pointer;border:0;background:none;width:100%;text-align:right}
+.nav:hover,.nav.active{background:#211820;color:white}
+.nav.active{border-right:3px solid var(--red)}
+.nav i{font-style:normal;width:21px;text-align:center;font-size:16px}
+.sidebar-bottom{border-top:1px solid var(--line);margin-top:22px;padding-top:15px}
+.main{margin-right:255px;width:calc(100% - 255px);min-height:100vh}
+.topbar{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:#0b0e16;position:sticky;top:0;z-index:4}
+.top-title{font-weight:bold;font-size:14px}
+.status{font-size:11px;color:#54d6a0}
+.user{display:flex;align-items:center;gap:10px;color:#bbc5d5;font-size:12px}
+.avatar{background:#34202a;color:#ff7580;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:bold}
+.content{padding:30px;max-width:1500px;margin:auto}
+.page{display:none}
+.page.active{display:block}
+.heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:25px;gap:15px}
+.heading h1{font-size:25px;margin:0 0 8px}
+.heading p{color:var(--muted);font-size:12px;margin:0}
+.btn{border:0;border-radius:7px;padding:11px 17px;background:var(--red);color:white;font-weight:bold;font-size:12px}
+.btn.secondary{background:#202a3b;border:1px solid #303c51}
+.btn.blue{background:#2769c9}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:19px}
+.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.stat-icon{background:#291a23;padding:9px;border-radius:8px}
+.stat-value{font-size:27px;font-weight:bold;margin-top:18px}
+.stat-foot{font-size:10px;color:var(--muted);margin-top:8px}
+.section-title{font-size:15px;margin:27px 0 14px}
+.two{display:grid;grid-template-columns:1.3fr 1fr;gap:15px}
+.activity{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.activity:last-child{border:0}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--blue)}
+.activity b{font-size:12px}
+.activity small{display:block;color:var(--muted);margin-top:5px;font-size:10px}
+.empty{padding:30px;text-align:center;color:var(--muted);font-size:12px}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.module{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:19px;cursor:pointer;text-align:right;color:white}
+.module:hover{border-color:var(--red);transform:translateY(-2px)}
+.module .ico{font-size:24px;margin-bottom:14px}
+.module b{display:block;font-size:13px}
+.module small{color:var(--muted);font-size:11px;display:block;margin-top:8px}
+.table-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+table{width:100%;border-collapse:collapse;min-width:550px;text-align:right}
+th,td{padding:16px;border-bottom:1px solid var(--line);font-size:12px}
+th{color:var(--muted);font-weight:normal}
+td{color:#d5dbea}
+.tag{padding:5px 9px;border-radius:5px;background:#272d3a;font-size:10px}
+.tag.red{background:#421c25;color:#ff8993}
+.tag.green{background:#16372b;color:#67d6a0}
+.search{background:#0a0e17;border:1px solid var(--line);padding:12px;border-radius:7px;color:white;width:100%;margin-bottom:15px}
+.notice{background:#171e2b;border:1px solid #28364c;padding:15px;border-radius:9px;color:#aebbd0;font-size:12px;line-height:2;margin-bottom:20px}
+@media(max-width:900px){
+.sidebar{width:75px;padding:15px 8px}
+.brand{font-size:12px;padding:12px 3px}
+.brand small,.nav span,.group,.sidebar-bottom .nav span{display:none}
+.nav{justify-content:center;padding:14px 5px}
+.nav i{font-size:19px}
+.main{margin-right:75px;width:calc(100% - 75px)}
+.stats{grid-template-columns:repeat(2,1fr)}
+.two{grid-template-columns:1fr}
+.menu-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+.content{padding:17px}
+.topbar{padding:0 15px}
+.heading h1{font-size:20px}
+.stats{gap:8px}
+.card{padding:13px}
+.stat-value{font-size:22px}
+.menu-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
-<header>
- <div class="logo">SHIELD <span>SECURITY</span></div>
- <nav>
-  <a onclick="show('home')">الرئيسية</a>
-  <a onclick="show('appeal')">فك الباند</a>
- </nav>
-</header>
+<div class="layout">
 
-<main id="home">
- <section class="hero">
-  <div class="tag">ADVANCED SECURITY SYSTEM</div>
-  <h1>حماية عالمك مع <span>SHIELD</span></h1>
-  <p>نظام حماية ومراقبة متطور لسيرفر Roblox RP.<br>أمان اللاعبين يبدأ من هنا.</p>
-  <button onclick="show('appeal')">طلب فك الباند</button>
+<aside class="sidebar">
+ <div class="brand">SHIELD <span>SECURITY</span><small>CONTROL CENTER V2</small></div>
+
+ <div class="group">الرئيسية</div>
+ <button class="nav active" onclick="go('dashboard',this)"><i>◈</i><span>لوحة التحكم</span></button>
+ <button class="nav" onclick="go('modules',this)"><i>▦</i><span>جميع الأنظمة</span></button>
+
+ <div class="group">إدارة اللاعبين</div>
+ <button class="nav" onclick="go('players',this)"><i>♙</i><span>اللاعبون</span></button>
+ <button class="nav" onclick="go('bans',this)"><i>⊘</i><span>إدارة الباندات</span></button>
+ <button class="nav" onclick="go('appeals',this)"><i>▤</i><span>طلبات الاستئناف</span></button>
+ <button class="nav" onclick="go('warnings',this)"><i>⚠</i><span>التحذيرات</span></button>
+
+ <div class="group">الإدارة</div>
+ <button class="nav" onclick="go('staff',this)"><i>♟</i><span>الإداريون</span></button>
+ <button class="nav" onclick="go('ranks',this)"><i>♛</i><span>الرتب والصلاحيات</span></button>
+ <button class="nav" onclick="go('tickets',this)"><i>✉</i><span>التذاكر والشكاوى</span></button>
+
+ <div class="group">الحماية والمراقبة</div>
+ <button class="nav" onclick="go('anticheat',this)"><i>⬡</i><span>Anti-Cheat</span></button>
+ <button class="nav" onclick="go('logs',this)"><i>▧</i><span>سجلات النظام</span></button>
+ <button class="nav" onclick="go('monitor',this)"><i>◉</i><span>مراقبة السيرفر</span></button>
+
+ <div class="group">النظام</div>
+ <button class="nav" onclick="go('reports',this)"><i>▥</i><span>التقارير والإحصائيات</span></button>
+ <button class="nav" onclick="go('settings',this)"><i>⚙</i><span>الإعدادات</span></button>
+
+ <div class="sidebar-bottom">
+  <button class="nav" onclick="go('help',this)"><i>?</i><span>المساعدة</span></button>
+ </div>
+</aside>
+
+<main class="main">
+ <header class="topbar">
+  <div class="top-title" id="topTitle">لوحة التحكم</div>
+  <div class="user"><span class="status">● النظام متصل بالواجهة</span><div class="avatar">S</div><span>SHIELD ADMIN</span></div>
+ </header>
+
+ <div class="content">
+
+ <section class="page active" id="dashboard">
+  <div class="heading">
+   <div><h1>لوحة التحكم</h1><p>مركز إدارة وحماية سيرفر Roblox RP</p></div>
+   <span class="tag">CONTROL CENTER</span>
+  </div>
+  <div class="notice">مرحباً بك في SHIELD SECURITY. هذه واجهة أولية، ولن تظهر بيانات اللاعبين أو العقوبات الحقيقية حتى نربط قاعدة البيانات.</div>
+  <div class="stats">
+   <div class="card"><div class="stat-top"><span>اللاعبون</span><span class="stat-icon">♙</span></div><div class="stat-value">—</div><div class="stat-foot">بانتظار ربط Roblox</div></div>
+   <div class="card"><div class="stat-top"><span>الباندات النشطة</span><span class="stat-icon">⊘</span></div><div class="stat-value">—</div><div class="stat-foot">بانتظار قاعدة البيانات</div></div>
+   <div class="card"><div class="stat-top"><span>طلبات الاستئناف</span><span class="stat-icon">▤</span></div><div class="stat-value">—</div><div class="stat-foot">بانتظار تفعيل الطلبات</div></div>
+   <div class="card"><div class="stat-top"><span>المخالفات الأمنية</span><span class="stat-icon">⬡</span></div><div class="stat-value">—</div><div class="stat-foot">بانتظار تشغيل الحماية</div></div>
+  </div>
+  <h3 class="section-title">مركز الأنشطة</h3>
+  <div class="two">
+   <div class="card"><b>آخر الأحداث</b><div class="empty">لا توجد أحداث مسجلة حتى الآن.</div></div>
+   <div class="card"><b>حالة النظام</b>
+    <div class="activity"><div class="dot"></div><div><b>واجهة الموقع</b><small>تعمل محلياً</small></div></div>
+    <div class="activity"><div class="dot" style="background:#e6aa42"></div><div><b>قاعدة البيانات</b><small>لم يتم الربط بعد</small></div></div>
+    <div class="activity"><div class="dot" style="background:#e6aa42"></div><div><b>Roblox Anti-Cheat</b><small>لم يتم الربط بعد</small></div></div>
+   </div>
+  </div>
  </section>
 
- <div class="container">
-  <div class="cards">
-   <div class="card">
-    <small>نظام الحماية</small>
-    <h2>ANTI-CHEAT</h2>
-    <small>مراقبة سلوك اللاعبين</small>
-   </div>
-   <div class="card">
-    <small>إدارة العقوبات</small>
-    <h2>BAN SYSTEM</h2>
-    <small>إدارة ومراجعة الباندات</small>
-   </div>
-   <div class="card">
-    <small>الاستئنافات</small>
-    <h2>APPEALS</h2>
-    <small>مراجعة طلبات اللاعبين</small>
-   </div>
+ <section class="page" id="modules">
+  <div class="heading"><div><h1>جميع الأنظمة</h1><p>مركز الوصول لجميع أدوات SHIELD</p></div></div>
+  <div class="menu-grid" id="moduleGrid"></div>
+ </section>
+
+ <section class="page" id="players">
+  <div class="heading"><div><h1>إدارة اللاعبين</h1><p>البحث وإدارة ملفات اللاعبين</p></div></div>
+  <input class="search" placeholder="ابحث باسم اللاعب أو Roblox User ID..." disabled>
+  <div class="table-wrap"><table><thead><tr><th>اللاعب</th><th>User ID</th><th>الحالة</th><th>العقوبات</th></tr></thead><tbody><tr><td colspan="4" class="empty">اربط قاعدة البيانات لعرض اللاعبين.</td></tr></tbody></table></div>
+ </section>
+
+ <section class="page" id="bans">
+  <div class="heading"><div><h1>إدارة الباندات</h1><p>العقوبات الدائمة والمؤقتة والقائمة السوداء</p></div><button class="btn" onclick="alert('سيتم تفعيل إصدار الباند بعد بناء قاعدة البيانات والصلاحيات.')">+ إصدار باند</button></div>
+  <div class="notice">سيتم تسجيل هوية الإداري والسبب والمدة والأدلة لكل عقوبة. فك الباند يتطلب صلاحية مستقلة.</div>
+  <div class="table-wrap"><table><thead><tr><th>اللاعب</th><th>نوع العقوبة</th><th>السبب</th><th>المدة</th><th>الحالة</th></tr></thead><tbody><tr><td colspan="5" class="empty">لا توجد بيانات حتى الآن.</td></tr></tbody></table></div>
+ </section>
+
+ <section class="page" id="appeals">
+  <div class="heading"><div><h1>طلبات الاستئناف</h1><p>مراجعة طلبات فك الباند</p></div></div>
+  <div class="empty card">سيتم عرض الطلبات ومراجعتها هنا بعد ربط قاعدة البيانات.</div>
+ </section>
+
+ <section class="page" id="warnings">
+  <div class="heading"><div><h1>التحذيرات</h1><p>سجل إنذارات ومخالفات اللاعبين</p></div></div>
+  <div class="empty card">لا توجد بيانات حتى الآن.</div>
+ </section>
+
+ <section class="page" id="staff">
+  <div class="heading"><div><h1>الإداريون</h1><p>إدارة فريق العمل وحساباته</p></div><button class="btn" onclick="go('ranks',document.querySelector('[onclick*=ranks]'))">إدارة الرتب</button></div>
+  <div class="notice">لن يستطيع أي شخص إضافة نفسه إلى فريق الإدارة. إضافة الموظفين ستتطلب حساب مالك موثقاً.</div>
+  <div class="empty card">لم تتم إضافة أعضاء الإدارة بعد.</div>
+ </section>
+
+ <section class="page" id="ranks">
+  <div class="heading"><div><h1>الرتب والصلاحيات</h1><p>إدارة مستويات الموظفين والتحكم بالوصول</p></div><button class="btn" onclick="alert('إنشاء الرتب سيتفعل بعد بناء نظام الصلاحيات.')">+ إنشاء رتبة</button></div>
+  <div class="table-wrap"><table><thead><tr><th>الرتبة</th><th>المستوى المقترح</th><th>الوصف</th><th>الحالة</th></tr></thead><tbody>
+   <tr><td>Owner</td><td>100</td><td>مالك النظام</td><td><span class="tag red">أعلى صلاحية</span></td></tr>
+   <tr><td>Co-Owner</td><td>90</td><td>الإدارة العليا</td><td><span class="tag">مقترحة</span></td></tr>
+   <tr><td>Head Admin</td><td>70</td><td>إدارة الإداريين</td><td><span class="tag">مقترحة</span></td></tr>
+   <tr><td>Admin</td><td>50</td><td>إدارة اللاعبين</td><td><span class="tag">مقترحة</span></td></tr>
+   <tr><td>Moderator</td><td>40</td><td>الإشراف والعقوبات المحدودة</td><td><span class="tag">مقترحة</span></td></tr>
+   <tr><td>Anti-Cheat Staff</td><td>35</td><td>مراجعة المخالفات</td><td><span class="tag">مقترحة</span></td></tr>
+   <tr><td>Ban Reviewer</td><td>30</td><td>مراجعة الاستئنافات</td><td><span class="tag">مقترحة</span></td></tr>
+   <tr><td>Support</td><td>20</td><td>الدعم الفني</td><td><span class="tag">مقترحة</span></td></tr>
+  </tbody></table></div>
+  <p class="stat-foot">هذه رتب تصميمية مقترحة وليست صلاحيات مفعّلة.</p>
+ </section>
+
+ <section class="page" id="tickets">
+  <div class="heading"><div><h1>التذاكر والشكاوى</h1><p>الدعم وبلاغات اللاعبين</p></div></div>
+  <div class="empty card">نظام التذاكر قيد التجهيز.</div>
+ </section>
+
+ <section class="page" id="anticheat">
+  <div class="heading"><div><h1>Anti-Cheat</h1><p>مركز مراقبة وحماية Roblox</p></div><span class="tag">NOT CONNECTED</span></div>
+  <div class="menu-grid">
+   <div class="module"><div class="ico">⚡</div><b>Speed Detection</b><small>كشف السرعة غير الطبيعية</small></div>
+   <div class="module"><div class="ico">◈</div><b>Fly Detection</b><small>كشف الطيران</small></div>
+   <div class="module"><div class="ico">⬡</div><b>Noclip Detection</b><small>كشف اختراق الجدران</small></div>
+   <div class="module"><div class="ico">⌖</div><b>Teleport Detection</b><small>كشف الانتقال غير المصرح</small></div>
+   <div class="module"><div class="ico">⚔</div><b>Weapon Validation</b><small>التحقق من الضرر والذخيرة</small></div>
+   <div class="module"><div class="ico">⌘</div><b>Remote Security</b><small>حماية استدعاءات السيرفر</small></div>
   </div>
-  <section class="section">
-   <h2>مميزات النظام</h2>
-   <div class="panel">
-    <p>◈ كشف السرعة والطيران غير الطبيعي</p>
-    <p>◈ مراقبة التلاعب بالأسلحة والضرر</p>
-    <p>◈ تسجيل المخالفات الأمنية</p>
-    <p>◈ نظام مراجعة طلبات فك الباند</p>
-   </div>
-  </section>
+  <div class="notice" style="margin-top:18px">هذه الوحدات واجهة تعريفية فقط. يجب بناء التحقق الفعلي داخل Roblox Server Scripts.</div>
+ </section>
+
+ <section class="page" id="logs">
+  <div class="heading"><div><h1>سجلات النظام</h1><p>تاريخ العمليات والتغييرات الإدارية</p></div></div>
+  <div class="empty card">سيتم تسجيل الأحداث هنا بعد تفعيل النظام.</div>
+ </section>
+
+ <section class="page" id="monitor">
+  <div class="heading"><div><h1>مراقبة السيرفر</h1><p>حالة الاتصال والأداء</p></div></div>
+  <div class="empty card">بانتظار ربط Roblox.</div>
+ </section>
+
+ <section class="page" id="reports">
+  <div class="heading"><div><h1>التقارير والإحصائيات</h1><p>تقارير الحماية والإدارة</p></div></div>
+  <div class="empty card">ستظهر التقارير بعد وصول البيانات الحقيقية.</div>
+ </section>
+
+ <section class="page" id="settings">
+  <div class="heading"><div><h1>الإعدادات</h1><p>إعدادات SHIELD SECURITY</p></div></div>
+  <div class="card"><b>إعدادات المشروع</b><p class="stat-foot">اسم النظام: SHIELD SECURITY</p><p class="stat-foot">الإصدار: V2</p><p class="stat-foot">الاستضافة: Cloudflare Workers</p><p class="stat-foot">قاعدة البيانات: غير مربوطة</p></div>
+ </section>
+
+ <section class="page" id="help">
+  <div class="heading"><div><h1>المساعدة</h1><p>معلومات عن النظام</p></div></div>
+  <div class="card">SHIELD SECURITY — Roblox Administration & Security Platform.</div>
+ </section>
+
  </div>
 </main>
-
-<main id="appeal" class="hidden">
- <div class="container">
-  <section class="hero">
-   <div class="tag">BAN APPEAL CENTER</div>
-   <h1>طلب <span>فك الباند</span></h1>
-   <p>قدم طلبك وسيتم مراجعته من قبل الإدارة.</p>
-  </section>
-  <div class="panel">
-   <form onsubmit="event.preventDefault();alert('هذه واجهة تجريبية فقط. سيتم تفعيل إرسال الطلبات بعد ربط قاعدة البيانات.');">
-    <label>اسم Roblox</label>
-    <input required placeholder="Username">
-    <label>رقم اللاعب (User ID)</label>
-    <input required type="number" placeholder="Roblox User ID">
-    <label>سبب طلب فك الباند</label>
-    <textarea required placeholder="اكتب تفاصيل طلبك..."></textarea>
-    <button type="submit">إرسال الطلب</button>
-   </form>
-  </div>
- </div>
-</main>
-
-<footer>SHIELD SECURITY © 2026 — ALL RIGHTS RESERVED</footer>
-
+</div>
 <script>
-function show(page){
- document.getElementById('home').classList.toggle('hidden',page!=='home');
- document.getElementById('appeal').classList.toggle('hidden',page!=='appeal');
+const titles={
+dashboard:"لوحة التحكم",modules:"جميع الأنظمة",players:"إدارة اللاعبين",
+bans:"إدارة الباندات",appeals:"طلبات الاستئناف",warnings:"التحذيرات",
+staff:"الإداريون",ranks:"الرتب والصلاحيات",tickets:"التذاكر والشكاوى",
+anticheat:"Anti-Cheat",logs:"سجلات النظام",monitor:"مراقبة السيرفر",
+reports:"التقارير والإحصائيات",settings:"الإعدادات",help:"المساعدة"
+};
+function go(id,el){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+ if(el)el.classList.add('active');
+ document.getElementById('topTitle').textContent=titles[id]||id;
  window.scrollTo(0,0);
 }
+const modules=[
+["♙","إدارة اللاعبين","players","ملفات اللاعبين والبحث"],
+["⊘","إدارة الباندات","bans","العقوبات الدائمة والمؤقتة"],
+["▤","الاستئنافات","appeals","طلبات فك الباند"],
+["♛","الرتب والصلاحيات","ranks","إدارة رتب الفريق"],
+["♟","الإداريون","staff","إدارة الموظفين"],
+["⬡","Anti-Cheat","anticheat","حماية السيرفر"],
+["✉","التذاكر","tickets","الشكاوى والدعم"],
+["▧","سجلات النظام","logs","مراقبة العمليات"],
+["◉","مراقبة السيرفر","monitor","حالة الاتصال"],
+["▥","التقارير","reports","الإحصائيات"],
+["⚙","الإعدادات","settings","التحكم بالنظام"]
+];
+document.getElementById('moduleGrid').innerHTML=modules.map(m=>
+`<div class="module" onclick="go('${m[2]}',document.querySelector('[onclick*=\\'${m[2]}\\']'))"><div class="ico">${m[0]}</div><b>${m[1]}</b><small>${m[3]}</small></div>`
+).join('');
 </script>
 </body>
 </html>
-
